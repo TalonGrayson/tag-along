@@ -1,0 +1,25 @@
+{
+  "name": "obs-con",
+  "version": "1.0.0",
+  "description": "Centralised OBS code",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "OBS"
+  ],
+  "author": "Talon Grayson",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment-timezone": "^0.5.31",
+    "obs-websocket-js": "^4.0.2",
+    "particle-api-js": "^9.0.1",
+    "path": "^0.12.7"
+  }
+}
