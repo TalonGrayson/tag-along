@@ -4,16 +4,17 @@ const CmenObs = require('./cmenobs');
 
 module.exports = class DeviceBuilder {
 
-  astrodec(obsCon, event_info) {
-    return new Astrodec(obsCon, event_info);
+  astrodec(obsCon, discordCon, event_info) {
+    return new Astrodec(obsCon, discordCon, event_info);
   }
 
-  astroscan(obsCon, event_info) {
-    return new Astroscan(obsCon, event_info);
+  astroscan(obsCon, discordCon, event_info) {
+    console.log();
+    return new Astroscan(obsCon, discordCon, event_info);
   }
 
-  cmenobs(obsCon, event_info) {
-    return new CmenObs(obsCon, event_info);
+  cmenobs(obsCon, discordCon, event_info) {
+    return new CmenObs(obsCon, discordCon, event_info);
   }
 
 }
