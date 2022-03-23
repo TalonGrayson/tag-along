@@ -1,8 +1,9 @@
 // Parent method for all devices, to keep things as generic as possible
 
 module.exports = class Device {
-  constructor(obsCon, event_info) {
+  constructor(obsCon, discordCon, event_info) {
     this.obsCon = obsCon;
+    this.discordCon = discordCon;
     this.event_info = event_info;
   }
 
@@ -122,5 +123,20 @@ module.exports = class Device {
       }, this.seconds(duration))
     );
   };
+
+  muteDiscord(mute) {
+    const guild = this.discordCon.client.guilds.cache.get(process.env.DISCORD_SERVER_ID);
+    guild.members.fetch(process.env.USER_DISCORD_ID)
+    .then(member => {
+      if(member.voice.channelId != null) {
+      	member.voice.setMute(mute);
+      }
+    });
+  };
+
+  brb() {
+    this.setScene("BRB");
+    this.muteDiscord(true);
+  }
 
 }

@@ -4,3 +4,4 @@ if (process.env.NODE_ENV != "production") {
 }
 
 require("./connectors/particle-connector");
+// require("./connectors/discord-connector");

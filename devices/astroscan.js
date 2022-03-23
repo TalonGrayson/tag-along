@@ -12,18 +12,21 @@ module.exports = class Astroscan extends Device {
 
   DrDoom() {
     super.transitionToCamera("Main Cams", "HeartLogo", 850, "Physical Work Cam");
+    super.muteDiscord(false);
   }
 
   BobaFett() {
     super.transitionToCamera("Main Cams", "HeartLogo", 850, "Elgato - Working");
+    super.muteDiscord(false);
   }
 
   MegaMan() {
     super.transitionToCamera("Main Cams", "HeartLogo", 850, "Elgato - Gaming");
+    super.muteDiscord(false);
   }
 
   JackSparrow() {
-    super.setScene("BRB");
+    super.brb();
   }
 
   TalonGrayson() {
