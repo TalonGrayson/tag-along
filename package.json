@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "OBS"
+    "OBS",
+    "Discord"
   ],
   "author": "Talon Grayson",
   "license": "ISC",
