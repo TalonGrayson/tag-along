@@ -9,7 +9,6 @@ module.exports = class DeviceBuilder {
   }
 
   astroscan(obsCon, discordCon, event_info) {
-    console.log();
     return new Astroscan(obsCon, discordCon, event_info);
   }
 

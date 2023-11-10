@@ -4,17 +4,10 @@ const token = process.env.DISCORD_TOKEN;
 
 // Create a new client instance
 const client = new Client({ fetchAllMembers: true, intents: [Intents.FLAGS.GUILDS] });
-// let member;
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
-	console.log('Firebeard is connected.');
-	// const guild = client.guilds.cache.get(process.env.DISCORD_SERVER_ID);
-	// guild.members.fetch(process.env.USER_DISCORD_ID)
-	// .then(data => {
-	// 	member = data;
-	// });
-	
+	console.log('Discord bot is connected.');	
 });
 
 // Login to Discord with your client's token

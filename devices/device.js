@@ -14,114 +14,191 @@ module.exports = class Device {
   };
 
   getStreamingStatus() {
-    return this.obsCon.obs.send('GetStreamingStatus').then((data) => {
+    return this.obsCon.obs.call('GetStreamStatus').then((data) => {
       return data;
+    })
+    .catch((err) => {
+      console.log({ Error: err });
     });
   };
 
   transitionToCamera(sceneName, transitionName, transitionDelay, cameraName) {
     this.obsCon.obs
-      .send("SetCurrentScene", {
-        "scene-name": "Main",
-      })
-      .then(
-        this.obsCon.obs.send("SetMute", {
-          source: "Band Hero Mic",
-          mute: false,
-        }).catch("Error ln17")
-      )
-      .then(
-        this.obsCon.obs.send("SetMute", {
-          source: "Main Channel",
-          mute: false,
-        }).catch("Error ln23")
-      )
-      .then(
-        this.obsCon.obs.send("SetMute", {
-          source: "Elgato",
-          mute: false,
-        }).catch("Error ln29")
-      )
-      .catch("Error ln31")
+    .call("SetCurrentProgramScene", {
+      "sceneName": "Main"
+    })
     .then(
       this.obsCon.obs
-      .send("SetSceneItemProperties", {
-        "scene-name": sceneName,
-        item: transitionName,
-        visible: true,
+      .call("GetSceneItemId", {
+        "sceneName": sceneName,
+        "sourceName": transitionName,
+      })
+      .then( (data) => {
+        this.obsCon.obs
+        .call("SetSceneItemEnabled", {
+          "sceneName": sceneName,
+          "sceneItemId": data.sceneItemId,
+          "sceneItemEnabled": true,
+        })
+      })
+      .catch((err) => {
+        console.log({ Error: err });
       })
     )
     .then(
       setTimeout(() => {
         this.obsCon.obs
-        .send("SetSceneItemProperties", {
-          "scene-name": sceneName,
-          item: "Elgato - Gaming",
-          visible: false,
-        }).catch("Error ln60")
+        .call("GetSceneItemId", {
+          "sceneName": sceneName,
+          "sourceName": "Elgato - Gaming",
+        })
+        .then( (data) => {
+          this.obsCon.obs
+          .call("SetSceneItemEnabled", {
+            "sceneName": sceneName,
+            "sceneItemId": data.sceneItemId,
+            "sceneItemEnabled": false,
+          })
+        })
+        .catch((err) => {
+          console.log({ Error: err });
+        })
         .then(
           this.obsCon.obs
-          .send("SetSceneItemProperties", {
-            "scene-name": sceneName,
-            item: "Elgato - Working",
-            visible: false,
-          }).catch("Error ln67")
+          .call("GetSceneItemId", {
+            "sceneName": sceneName,
+            "sourceName": "Elgato - Working",
+          })
+          .then( (data) => {
+            this.obsCon.obs
+            .call("SetSceneItemEnabled", {
+              "sceneName": sceneName,
+              "sceneItemId": data.sceneItemId,
+              "sceneItemEnabled": false,
+            })
+          })
+          .catch((err) => {
+            console.log({ Error: err });
+          })
         )
+        .catch((err) => {
+          console.log({ Error: err });
+        })
         .then(
           this.obsCon.obs
-          .send("SetSceneItemProperties", {
-            "scene-name": sceneName,
-            item: "Physical Work Cam",
-            visible: false,
-          }).catch("Error ln76")
+          .call("GetSceneItemId", {
+            "sceneName": sceneName,
+            "sourceName": "Physical Work Cam",
+          })
+          .then( (data) => {
+            this.obsCon.obs
+            .call("SetSceneItemEnabled", {
+              "sceneName": sceneName,
+              "sceneItemId": data.sceneItemId,
+              "sceneItemEnabled": false,
+            })
+          })
+          .catch((err) => {
+            console.log({ Error: err });
+          })
         )
+        .catch((err) => {
+          console.log({ Error: err });
+        })
         .then(
           setTimeout(() => {
             this.obsCon.obs
-            .send("SetSceneItemProperties", {
-            "scene-name": sceneName,
-            item: cameraName,
-            visible: true,
-          }).catch("Error ln76")
+            .call("GetSceneItemId", {
+              "sceneName": sceneName,
+              "sourceName": cameraName,
+            })
+            .then( (data) => {
+              this.obsCon.obs
+              .call("SetSceneItemEnabled", {
+                "sceneName": sceneName,
+                "sceneItemId": data.sceneItemId,
+                "sceneItemEnabled": true,
+              })
+            })
+            .catch((err) => {
+              console.log({ Error: err });
+            });
           }, 10)
           
         )
+        .catch((err) => {
+          console.log({ Error: err });
+        });
       }, transitionDelay)
     )
     .then(
       setTimeout(() => {
         this.obsCon.obs
-        .send("SetSceneItemProperties", {
-          "scene-name": sceneName,
-          item: transitionName,
-          visible: false,
-        }).catch("Error ln89")
+        .call("GetSceneItemId", {
+          "sceneName": sceneName,
+          "sourceName": transitionName,
+        })
+        .then( (data) => {
+          this.obsCon.obs
+          .call("SetSceneItemEnabled", {
+            "sceneName": sceneName,
+            "sceneItemId": data.sceneItemId,
+            "sceneItemEnabled": false,
+          })
+        })
+        .catch((err) => {
+          console.log({ Error: err });
+        });
       }, 1200)
     )
-    .catch("Error because OBS not there?");
+    .catch((err) => {
+      console.log({ Error: err });
+    });
   };
 
   setScene(sceneName) {
+    console.log('Setting Scene: ', sceneName)
     this.obsCon.obs
-      .send("SetCurrentScene", {
-        "scene-name": sceneName,
-      }).catch("Error ln99");
+      .call("SetCurrentProgramScene", {sceneName: sceneName})
+      .catch((err) => {
+        console.log({ Error: err });
+      });
   };
 
   timedSourceDisplay(scene, source, duration) {
-    this.obsCon.obs.send("SetSceneItemProperties", {
-      "scene-name": scene,
-      item: source,
-      visible: true,
-    }).then(
+    this.obsCon.obs
+    .call("GetSceneItemId", {
+      "sceneName": scene,
+      "sourceName": source,
+    })
+    .then( (data) => {
+      this.obsCon.obs
+      .call("SetSceneItemEnabled", {
+        "sceneName": scene,
+        "sceneItemId": data.sceneItemId,
+        "sceneItemEnabled": true,
+      })
+    })
+    .then(
       setTimeout(() => {
-        this.obsCon.obs.send("SetSceneItemProperties", {
-          "scene-name": scene,
-          item: source,
-          visible: false,
+        this.obsCon.obs
+        .call("GetSceneItemId", {
+          "sceneName": scene,
+          "sourceName": source,
+        })
+        .then( (data) => {
+          this.obsCon.obs
+          .call("SetSceneItemEnabled", {
+            "sceneName": scene,
+            "sceneItemId": data.sceneItemId,
+            "sceneItemEnabled": false,
+          })
         })
       }, this.seconds(duration))
-    );
+    )
+    .catch((err) => {
+      console.log({ Error: err });
+    });
   };
 
   muteDiscord(mute) {
@@ -129,14 +206,78 @@ module.exports = class Device {
     guild.members.fetch(process.env.USER_DISCORD_ID)
     .then(member => {
       if(member.voice.channelId != null) {
-      	member.voice.setMute(mute);
+      	member.voice.setMute(mute)
+        .catch((err) => {
+          console.log({ Error: err });
+        });
       }
-    });
+    })
   };
+
+  muteSource(source, mute) {
+    this.obsCon.obs.call("SetInputMute", {
+      inputName: source,
+      inputMuted: mute,
+    })
+    .catch((err) => {
+      console.log({ Error: err });
+    });
+  }
+
+  sourceMuted(source) {
+    return this.obsCon.obs.call("GetInputMute", {
+      inputName: source,
+    }).then((data) => {
+      return data;
+    }).catch((err) => {
+      console.log({ Error: err });
+    });
+  }
+
+  displaySource(sceneName, sourceName, visible) {
+    this.obsCon.obs
+    .call("GetSceneItemId", {
+      "sceneName": sceneName,
+      "sourceName": sourceName,
+    })
+    .then( (data) => {
+      this.obsCon.obs
+      .call("SetSceneItemEnabled", {
+        "sceneName": sceneName,
+        "sceneItemId": data.sceneItemId,
+        "sceneItemEnabled": visible,
+      })
+    })
+    .catch((err) => {
+      console.log("Gottem")
+      console.log({ Error: err });
+    })
+  }
 
   brb() {
     this.setScene("BRB");
     this.muteDiscord(true);
   }
 
+  dnd() {
+    this.transitionToCamera("Main Cams", "HeartLogo", 850, "Elgato - Working");
+    this.displaySource("Main", "Discord - Voice Widget", false);
+    this.displaySource("Main", "Discord - DnD VC Widget", true);
+    this.displaySource("Main", "Facecam", false);
+    this.muteDiscord(false);
+    this.muteSource("NEEWER Mic", false);
+    this.muteSource("Main Channel", false);
+    this.muteSource("Chillhop VLC Playlist", true);
+    this.muteSource("Spotify", true);
+    this.muteSource("D&D Spotify", false);
+    this.muteSource("Elgato", true);
+  }
+
+  killswitch() {
+    this.obsCon.obs
+    .call("StopStream")
+    .catch((err) => {
+      console.log({ Error: err });
+    });
+  }
 }
