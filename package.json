@@ -1,6 +1,6 @@
 {
   "name": "obs-con",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Centralised OBS code",
   "main": "index.js",
   "scripts": {
