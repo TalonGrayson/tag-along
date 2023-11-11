@@ -101,6 +101,7 @@ module.exports = class Astroscan extends Device {
         super.muteSource("Spotify", false);
         super.muteSource("D&D Spotify", false);
       } else {
+        super.restart();
         super.setScene("Starting Soon");
         super.muteSource("NEEWER Mic", true);
         super.muteSource("Main Channel", true);
