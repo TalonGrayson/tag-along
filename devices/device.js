@@ -282,7 +282,7 @@ module.exports = class Device {
   }
 
   restart() {
-    // setTimeout(function () {
+    setTimeout(function () {
       // Listen for the 'exit' event.
       // This is emitted when our app exits.
       process.on("exit", function () {
@@ -302,6 +302,6 @@ module.exports = class Device {
           );
         });
         process.exit();
-    // }, 1000);
+    }, 1000);
   }
 }

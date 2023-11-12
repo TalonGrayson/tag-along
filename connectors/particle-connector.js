@@ -25,7 +25,7 @@ devicesPr.then(
 
     particle
       .getEventStream({
-        name: "scan_info",
+        name: "incoming_scan",
         auth: token,
       })
       .then(function (stream) {

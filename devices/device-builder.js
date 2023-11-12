@@ -8,8 +8,8 @@ module.exports = class DeviceBuilder {
     return new Astrodec(obsCon, discordCon, event_info);
   }
 
-  astroscan(obsCon, discordCon, event_info) {
-    return new Astroscan(obsCon, discordCon, event_info);
+  async astroscan(obsCon, discordCon, event_info) {
+    return new Astroscan(obsCon, discordCon, await eventTag(event_info.id));
   }
 
   cmenobs(obsCon, discordCon, event_info) {
