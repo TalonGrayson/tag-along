@@ -1,0 +1,15 @@
+-- CreateTable
+CREATE TABLE "Tags" (
+    "id" SERIAL NOT NULL,
+    "tagHex" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "lightRGB" TEXT NOT NULL DEFAULT '255,255,255',
+    "lastSeen" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Tags_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Tags_tagHex_key" ON "Tags"("tagHex");
