@@ -3,9 +3,6 @@ let obsCon = require("../connectors/obs-connector");
 let discordCon = require("../connectors/discord-connector");
 const deviceBuilder = new DeviceBuilder();
 
-const Mfrc522 = require("mfrc522-rpi");
-const SoftSPI = require("rpi-softspi");
-
 runEvent = (obsCon, discordCon, event_info) => {
   // Build device from event data, passing in obsCon
   let device = deviceBuilder[event_info.device](obsCon, discordCon, event_info);
@@ -27,6 +24,15 @@ particleEventListener = (event_data) => {
   runEvent(obsCon, discordCon, event_info);
 
 };
+
+rfidEventListener = () => {
+
+  // Parse event data
+  const event_info = this.rfidScanListener();
+
+  // Run event
+  runEvent(obsCon, discordCon, event_info);
+}
 
 rfidScanListener = () => {
   "use strict";
@@ -51,32 +57,11 @@ rfidScanListener = () => {
 
     //# Get the UID of the card
     const uid = mfrc522.getUid();
-    let eventName;
-    if (uid.status) {
-      switch(parsedRfidTag(uid.data)) {
-        case "4:28:82:26":
-          console.log("Mega Man");
-          eventName = "Mega Man";
-          break;
-        case "4:1f:c5:56":
-          console.log("Jack Sparrow");
-          eventName = "Jack Sparrow";
-          break;
-        case "4:6b:2e:c9":
-          console.log("Talon Grayson");
-          eventName = "Talon Grayson";
-          break;
-        default:
-          console.log("Unknown tag");
-      }
-    } else {
-      console.log("UID Scan Error");
-      return;
-    }
-
+    const eventName = findRfidEvent(uid);
+    
     if (eventName) {
-      const event_info = {device: "astroscan", name: eventName}
-      
+      return { device: "astroscan", name: eventName }
+
       // Run event
       runEvent(obsCon, discordCon, event_info);
     }
@@ -86,6 +71,24 @@ rfidScanListener = () => {
 
 parsedRfidTag = (uid) => {
   return `${uid[1].toString(16)}:${uid[2].toString(16)}:${uid[3].toString(16)}:${uid[4].toString(16)}` //:${uid[5].toString(16)}:${uid[6].toString(16)}:${uid[7].toString(16)}`
+}
+
+findRfidEvent = (uid) => {
+  if (uid.status) {
+    switch(parsedRfidTag(uid.data)) {
+      case "4:28:82:26":
+        return "Mega Man";
+      case "4:1f:c5:56":
+        return "Jack Sparrow";
+      case "4:6b:2e:c9":
+        return "Talon Grayson";
+      default:
+        return;
+    }
+  } else {
+    console.log("UID Scan Error");
+    return;
+  }
 }
 
 module.exports = {
