@@ -212,6 +212,7 @@ module.exports = class Device {
         });
       }
     })
+    .catch(error => console.log("Discord error: %o", error));
   };
 
   muteSource(source, mute) {
