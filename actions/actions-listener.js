@@ -93,5 +93,5 @@ findRfidEvent = (uid) => {
 
 module.exports = {
   particleEventListener,
-  rfidScanListener,
+  rfidEventListener,
 };
