@@ -40,13 +40,15 @@ rfidScanListener = () => {
     mfrc522.reset();
 
     //# Scan for cards
-    let response = mfrc522.findCard();
-    if (!response.status) return;
+    const foundCard = mfrc522.findCard();
+    if (!foundCard.status) return;
 
     //# Get the UID of the card
-    response = mfrc522.getUid();
-    if (response.status) {
-      switch(parsedRfidTag(response.data)) {
+    const uid = mfrc522.getUid();
+    if (uid.status) {
+      console.log("RESPONSE: %o", uid)
+      console.log("RESPONSE DATA: %o", uid.data)
+      switch(parsedRfidTag(uid.data)) {
         case "4:28:82:26":
           console.log("Mega Man");
         case "4:1f:c5:56":
