@@ -203,7 +203,7 @@ module.exports = class Device {
 
   muteDiscord(mute) {
     const guild = this.discordCon.client.guilds.cache.get(process.env.DISCORD_SERVER_ID);
-    if (guild.members) {
+    if (guild) {
       guild.members.fetch(process.env.USER_DISCORD_ID)
       .then(member => {
         if(member.voice.channelId != null) {
@@ -215,7 +215,7 @@ module.exports = class Device {
       })
       .catch(error => console.log("Discord error: %o", error));
     } else {
-      console.log("No Discord guild members found");
+      console.log("No Discord guild found");
     }
   };
 
