@@ -57,7 +57,7 @@ rfidScanListener = () => {
     //# If we have the UID, continue
     const uid = response.data;
     console.log("Response: %o", response);
-    console.log("Uid: %o", uid);
+    console.log("Uid: %o", mfrc522.getUid());
     console.log("Card read UID: %o", parsedRfidTag(uid));
 
     //# Select the scanned card
