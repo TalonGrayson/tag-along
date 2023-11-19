@@ -57,6 +57,8 @@ rfidScanListener = () => {
 
   const mfrc522 = new Mfrc522(softSPI).setResetPin(22)
 
+  console.log("Ready...");
+
   setInterval(function() {
     //# reset card
     mfrc522.reset();
