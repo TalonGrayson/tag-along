@@ -25,6 +25,7 @@
     "obs-websocket-js": "^5.0.1",
     "particle-api-js": "^9.0.1",
     "path": "^0.12.7",
-    "rpi-softspi": "^1.0.5"
+    "rpi-softspi": "^1.0.5",
+    "rpio": "^2.4.2"
   }
 }
