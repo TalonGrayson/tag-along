@@ -3,7 +3,7 @@ const particle = new Particle();
 const token = process.env.PARTICLE_ACCESS_TOKEN;
 const devicesPr = particle.listDevices({ auth: token });
 
-const { particleEventListener } = require("../actions/actions-listener");
+const { particleEventListener, rfidScanListener } = require("../actions/actions-listener");
 
 connectionStatus = (device) => {
   console.log(
@@ -11,30 +11,32 @@ connectionStatus = (device) => {
   );
 };
 
-devicesPr.then(
-  function (devices) {
-    const device_names = process.env.PARTICLE_DEVICE_NAMES.split(",");
+rfidScanListener();
 
-    const found_devices = devices.body.filter((device) =>
-      device_names.includes(device.name)
-    );
+// devicesPr.then(
+//   function (devices) {
+//     const device_names = process.env.PARTICLE_DEVICE_NAMES.split(",");
 
-    found_devices.forEach((found_device) => {
-      connectionStatus(found_device);
-    });
+//     const found_devices = devices.body.filter((device) =>
+//       device_names.includes(device.name)
+//     );
 
-    particle
-      .getEventStream({
-        name: "scan_info",
-        auth: token,
-      })
-      .then(function (stream) {
-        stream.on("event", function (data) {
-          particleEventListener(data);
-        });
-      });
-  },
-  function (err) {
-    console.log("List devices call failed: ", err);
-  }
-);
+//     found_devices.forEach((found_device) => {
+//       connectionStatus(found_device);
+//     });
+
+//     particle
+//       .getEventStream({
+//         name: "scan_info",
+//         auth: token,
+//       })
+//       .then(function (stream) {
+//         stream.on("event", function (data) {
+//           particleEventListener(data);
+//         });
+//       });
+//   },
+//   function (err) {
+//     console.log("List devices call failed: ", err);
+//   }
+// );
