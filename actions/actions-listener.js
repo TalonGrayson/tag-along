@@ -3,6 +3,9 @@ let obsCon = require("../connectors/obs-connector");
 let discordCon = require("../connectors/discord-connector");
 const deviceBuilder = new DeviceBuilder();
 
+const Mfrc522 = require("mfrc522-rpi");
+const SoftSPI = require("rpi-softspi");
+
 particleEventListener = (event_data) => {
 
   // Parse event data
@@ -21,8 +24,6 @@ particleEventListener = (event_data) => {
 
 rfidScanListener = () => {
   "use strict";
-  const Mfrc522 = require("./../index");
-  const SoftSPI = require("rpi-softspi");
 
   //# This loop keeps checking for chips. If one is near it will get the UID and authenticate
   console.log("scanning...");
@@ -58,6 +59,7 @@ rfidScanListener = () => {
       console.log("UID Scan Error");
       return;
     }
+    
     //# If we have the UID, continue
     const uid = response.data;
     console.log(
