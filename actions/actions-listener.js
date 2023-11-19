@@ -56,6 +56,8 @@ rfidScanListener = () => {
 
     //# If we have the UID, continue
     const uid = response.data;
+    console.log("Response: %o", response);
+    console.log("Uid: %o", uid);
     console.log("Card read UID: %o", parsedRfidTag(uid));
 
     //# Select the scanned card
@@ -81,7 +83,7 @@ rfidScanListener = () => {
 }
 
 parsedRfidTag = (uid) => {
-  return `${uid[1].toString(16)}:${uid[2].toString(16)}:${uid[3].toString(16)}:${uid[4].toString(16)}:${uid[5].toString(16)}:${uid[6].toString(16)}:${uid[7].toString(16)}:`
+  return `${uid[1].toString(16)}:${uid[2].toString(16)}:${uid[3].toString(16)}:${uid[4].toString(16)}` //:${uid[5].toString(16)}:${uid[6].toString(16)}:${uid[7].toString(16)}`
 }
 
 module.exports = {
