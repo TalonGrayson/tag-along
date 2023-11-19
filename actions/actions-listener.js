@@ -6,11 +6,7 @@ const deviceBuilder = new DeviceBuilder();
 const Mfrc522 = require("mfrc522-rpi");
 const SoftSPI = require("rpi-softspi");
 
-particleEventListener = (event_data) => {
-
-  // Parse event data
-  const event_info = JSON.parse(event_data.data.replace(/'/g, '"'));
-
+runEvent = (obsCon, discordCon, event_info) => {
   // Build device from event data, passing in obsCon
   let device = deviceBuilder[event_info.device](obsCon, discordCon, event_info);
 
@@ -20,6 +16,16 @@ particleEventListener = (event_data) => {
       
   // Run the requested method on the device
   device[device.event]();
+}
+
+particleEventListener = (event_data) => {
+
+  // Parse event data
+  const event_info = JSON.parse(event_data.data.replace(/'/g, '"'));
+
+  // Run event
+  runEvent(obsCon, discordCon, event_info);
+
 };
 
 rfidScanListener = () => {
@@ -45,18 +51,20 @@ rfidScanListener = () => {
 
     //# Get the UID of the card
     const uid = mfrc522.getUid();
+    let eventName;
     if (uid.status) {
-      console.log("RESPONSE: %o", uid)
-      console.log("RESPONSE DATA: %o", uid.data)
       switch(parsedRfidTag(uid.data)) {
         case "4:28:82:26":
           console.log("Mega Man");
+          eventName = "Mega Man";
           break;
         case "4:1f:c5:56":
           console.log("Jack Sparrow");
+          eventName = "Jack Sparrow";
           break;
         case "4:6b:2e:c9":
           console.log("Talon Grayson");
+          eventName = "Talon Grayson";
           break;
         default:
           console.log("Unknown tag");
@@ -64,6 +72,13 @@ rfidScanListener = () => {
     } else {
       console.log("UID Scan Error");
       return;
+    }
+
+    if (eventName) {
+      const event_info = {device: "astroscan", name: eventName}
+      
+      // Run event
+      runEvent(obsCon, discordCon, event_info);
     }
   }, 500);
 
