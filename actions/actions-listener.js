@@ -51,10 +51,13 @@ rfidScanListener = () => {
       switch(parsedRfidTag(uid.data)) {
         case "4:28:82:26":
           console.log("Mega Man");
+          break;
         case "4:1f:c5:56":
           console.log("Jack Sparrow");
+          break;
         case "4:6b:2e:c9":
           console.log("Talon Grayson");
+          break;
         default:
           console.log("Unknown tag");
       }
