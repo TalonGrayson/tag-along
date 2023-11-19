@@ -55,7 +55,7 @@ rfidScanListener = () => {
     client: 24 // pin number of CS
   });
 
-  const mfrc522 = new Mfrc522(softSPI).setResetPin(22)
+  const mfrc522 = new Mfrc522(softSPI)//.setResetPin(22)
 
   console.log("Ready...");
 
