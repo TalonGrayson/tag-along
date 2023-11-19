@@ -81,7 +81,7 @@ rfidScanListener = () => {
 }
 
 parsedRfidTag = (uid) => {
-  `${uid[1].toString(16)}:${uid[2].toString(16)}:${uid[3].toString(16)}:${uid[4].toString(16)}:${uid[5].toString(16)}:${uid[6].toString(16)}:${uid[7].toString(16)}:`
+  return `${uid[1].toString(16)}:${uid[2].toString(16)}:${uid[3].toString(16)}:${uid[4].toString(16)}:${uid[5].toString(16)}:${uid[6].toString(16)}:${uid[7].toString(16)}:`
 }
 
 module.exports = {
