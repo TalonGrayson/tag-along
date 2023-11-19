@@ -2,6 +2,8 @@ let DeviceBuilder = require('../devices/device-builder');
 let obsCon = require("../connectors/obs-connector");
 let discordCon = require("../connectors/discord-connector");
 const deviceBuilder = new DeviceBuilder();
+const Mfrc522 = require("mfrc522-rpi");
+const SoftSPI = require("rpi-softspi");
 
 runEvent = (obsCon, discordCon, event_info) => {
   // Build device from event data, passing in obsCon
@@ -28,7 +30,7 @@ particleEventListener = (event_data) => {
 rfidEventListener = () => {
 
   // Parse event data
-  const event_info = this.rfidScanListener();
+  const event_info = rfidScanListener();
 
   // Run event
   runEvent(obsCon, discordCon, event_info);
