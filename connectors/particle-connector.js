@@ -4,7 +4,7 @@ const token = process.env.PARTICLE_ACCESS_TOKEN;
 const devicesPr = particle.listDevices({ auth: token });
 
 
-const { particleEventListener, rfidScanListener } = require("../actions/actions-listener");
+const { particleEventListener } = require("../actions/actions-listener");
 
 connectionStatus = (device) => {
   console.log(

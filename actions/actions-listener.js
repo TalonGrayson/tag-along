@@ -21,6 +21,7 @@ particleEventListener = (event_data) => {
 
   // Parse event data
   const event_info = JSON.parse(event_data.data.replace(/'/g, '"'));
+  if(!event_info || !event_info.device || !event_info.name) return;
 
   // Run event
   runEvent(obsCon, discordCon, event_info);
@@ -31,6 +32,7 @@ rfidEventListener = () => {
 
   // Parse event data
   const event_info = rfidScanListener();
+  if(!event_info || !event_info.device || !event_info.name) return;
 
   // Run event
   runEvent(obsCon, discordCon, event_info);
@@ -63,16 +65,9 @@ rfidScanListener = () => {
     
     if (eventName) {
       return { device: "astroscan", name: eventName }
-
-      // Run event
-      runEvent(obsCon, discordCon, event_info);
     }
   }, 500);
 
-}
-
-parsedRfidTag = (uid) => {
-  return `${uid[1].toString(16)}:${uid[2].toString(16)}:${uid[3].toString(16)}:${uid[4].toString(16)}` //:${uid[5].toString(16)}:${uid[6].toString(16)}:${uid[7].toString(16)}`
 }
 
 findRfidEvent = (uid) => {
@@ -91,6 +86,10 @@ findRfidEvent = (uid) => {
     console.log("UID Scan Error");
     return;
   }
+}
+
+parsedRfidTag = (uid) => {
+  return `${uid[1].toString(16)}:${uid[2].toString(16)}:${uid[3].toString(16)}:${uid[4].toString(16)}` //:${uid[5].toString(16)}:${uid[6].toString(16)}:${uid[7].toString(16)}`
 }
 
 module.exports = {
