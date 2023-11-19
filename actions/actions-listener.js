@@ -32,9 +32,15 @@ rfidEventListener = () => {
 
   // Parse event data
   const event_info = rfidScanListener();
-  if(!event_info || !event_info.device || !event_info.name) return;
+  if(!event_info) console.log("No event!");
+  if(!event_info) return;
+  if(!event_info.device) console.log("No Device: %o", event_info);
+  if(!event_info.device) return;
+  if(!event_info.name) console.log("No Name: %o", event_info);
+  if(!event_info.name) return;
 
   // Run event
+  console.log("Event info: %o", event_info);
   runEvent(obsCon, discordCon, event_info);
 }
 
