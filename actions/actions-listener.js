@@ -46,21 +46,19 @@ rfidScanListener = () => {
     //# Get the UID of the card
     response = mfrc522.getUid();
     if (response.status) {
-      const rfidUid = parsedRfidTag(response.data);
+      switch(parsedRfidTag(response.data)) {
+        case "4:28:82:26":
+          console.log("Mega Man");
+        case "4:1f:c5:56":
+          console.log("Jack Sparrow");
+        case "4:6b:2e:c9":
+          console.log("Talon Grayson");
+        default:
+          console.log("Unknown tag");
+      }
     } else {
       console.log("UID Scan Error");
       return;
-    }
-
-    switch(rfidUid) {
-      case "4:28:82:26":
-        console.log("Mega Man");
-      case "4:1f:c5:56":
-        console.log("Jack Sparrow");
-      case "4:6b:2e:c9":
-        console.log("Talon Grayson");
-      default:
-        console.log("Unknown tag");
     }
   }, 500);
 
