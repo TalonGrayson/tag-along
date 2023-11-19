@@ -72,7 +72,8 @@ rfidScanListener = () => {
     const eventName = findRfidEvent(uid);
     
     if (eventName) {
-      return { device: "astroscan", name: eventName }
+      const event_info = { device: "astroscan", name: eventName };
+      runEvent(obsCon, discordCon, event_info);
     }
   }, 500);
 
@@ -102,5 +103,5 @@ parsedRfidTag = (uid) => {
 
 module.exports = {
   particleEventListener,
-  rfidEventListener,
+  rfidScanListener,
 };
