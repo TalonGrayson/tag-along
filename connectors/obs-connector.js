@@ -19,6 +19,8 @@ obs
     console.log(`OBSCon could not connect to OBS!`);
     // Promise convention dicates you have a catch on every chain.
     console.log({ obs_websocket_error: err });
+    console.log("Reidentifying...");
+    obs.reidentify().catch(error => console.error("Error: %o", error));
   });
 
 // You must add this handler to avoid uncaught exceptions.
