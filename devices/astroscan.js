@@ -75,13 +75,13 @@ module.exports = class Astroscan extends Device {
     super.transitionToCamera("Main Cams", "HeartLogo", 850, "Elgato - Gaming");
     super.displaySource("Main", "Discord - Voice Widget", true);
     super.displaySource("Main", "Discord - DnD VC Widget", false);
-    super.displaySource("Main", "Facecam", false);
+    super.displaySource("Main", "Facecam", true);
     super.muteDiscord(false);
     super.muteSource("NEEWER Mic", false);
     super.muteSource("Main Channel", false);
     super.muteSource("Chillhop VLC Playlist", true);
     super.muteSource("Spotify", false);
-    super.muteSource("D&D Spotify", false);
+    super.muteSource("D&D Spotify", true);
     super.muteSource("Elgato", false);
   }
 

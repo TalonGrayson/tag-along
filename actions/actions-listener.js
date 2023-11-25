@@ -69,7 +69,7 @@ rfidScanListener = () => {
 
     //# Get the UID of the card
     const uid = mfrc522.getUid();
-    console.log("UID: %o", uid);
+    console.log("UID: %o", parsedRfidTag(uid.data));
     const eventName = findRfidEvent(uid);
     
     if (eventName) {
@@ -90,6 +90,8 @@ findRfidEvent = (uid) => {
         return "Jack Sparrow";
       case "4:6b:2e:c9":
         return "Talon Grayson";
+      case "x:x:x:x":
+        return "Dr Doom";
       default:
         return;
     }
