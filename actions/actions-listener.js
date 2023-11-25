@@ -90,8 +90,14 @@ findRfidEvent = (uid) => {
         return "Jack Sparrow";
       case "4:6b:2e:c9":
         return "Talon Grayson";
-      case "x:x:x:x":
+      case "4:34:e4:5c":
         return "Dr Doom";
+      case "4:8b:43:44":
+        return "Guy Chapman";
+      case "4:26:fa:50":
+        return "Chester Hassenpfeffer";
+      case "4:8e:93:91":
+        return "Poogie";
       default:
         return;
     }
