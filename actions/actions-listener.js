@@ -69,6 +69,7 @@ rfidScanListener = () => {
 
     //# Get the UID of the card
     const uid = mfrc522.getUid();
+    console.log("UID: %o", uid);
     const eventName = findRfidEvent(uid);
     
     if (eventName) {
