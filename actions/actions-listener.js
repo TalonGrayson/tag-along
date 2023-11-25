@@ -80,6 +80,7 @@ rfidScanListener = () => {
 }
 
 findRfidEvent = (uid) => {
+  console.log(uid);
   if (uid.status) {
     switch(parsedRfidTag(uid.data)) {
       case "4:28:82:26":

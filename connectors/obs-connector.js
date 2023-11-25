@@ -20,7 +20,14 @@ obs
     // Promise convention dicates you have a catch on every chain.
     console.log({ obs_websocket_error: err });
     console.log("Reidentifying...");
-    obs.reidentify().catch(error => console.error("Error: %o", error.message));
+    obs.reidentify()
+    .catch(
+      error => {
+        console.error("Error: %o", error.message)
+        if(error.message == "Not connected") {
+          // Dunno tbh...
+        }
+      });
   });
 
 // You must add this handler to avoid uncaught exceptions.
