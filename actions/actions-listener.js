@@ -75,6 +75,8 @@ rfidScanListener = () => {
     if (eventName) {
       const event_info = { device: "astroscan", name: eventName };
       runEvent(obsCon, discordCon, event_info);
+      console.log("Waiting...");
+      setInterval(() => console.log("...wait complete."), 3000);
     }
   }, 500);
 
