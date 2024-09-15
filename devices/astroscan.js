@@ -72,17 +72,7 @@ module.exports = class Astroscan extends Device {
 
   MegaMan() { // Gaming Mode
     console.log("MegaMan");
-    super.transitionToCamera("Main Cams", "HeartLogo", 850, "Elgato - Gaming");
-    super.displaySource("Main", "Discord - Voice Widget", true);
-    super.displaySource("Main", "Discord - DnD VC Widget", false);
-    super.displaySource("Main", "Facecam", false);
-    super.muteDiscord(false);
-    super.muteSource("NEEWER Mic", false);
-    super.muteSource("Main Channel", false);
-    super.muteSource("Chillhop VLC Playlist", true);
-    super.muteSource("Spotify", false);
-    super.muteSource("D&D Spotify", false);
-    super.muteSource("Elgato", false);
+    super.muteSource("LeGohan Mic", true);
   }
 
   Shot() { // Shot
@@ -94,18 +84,9 @@ module.exports = class Astroscan extends Device {
     console.log('TalonGrayson');
     super.getStreamingStatus().then((streamingStatus) => {
       if (streamingStatus.streaming) {
-        super.setScene("Ending Soon");
-        super.muteSource("NEEWER Mic", true);
-        super.muteSource("Main Channel", true);
-        super.muteSource("Chillhop VLC Playlist", false);
-        super.muteSource("Spotify", false);
-        super.muteSource("D&D Spotify", false);
+        super.setScene("Ending Soon").catch(console.error);
       } else {
-        super.restart();
-        super.setScene("Starting Soon");
-        super.muteSource("NEEWER Mic", true);
-        super.muteSource("Main Channel", true);
-        super.muteDiscord(true);
+        super.setScene("Starting Soon").catch(console.error);
       }
 
     })
@@ -113,5 +94,9 @@ module.exports = class Astroscan extends Device {
         console.log({ Error: err });
       }
       )
+  }
+
+  IronMan() {
+    console.log("IronMan");
   }
 }

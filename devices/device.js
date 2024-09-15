@@ -203,15 +203,20 @@ module.exports = class Device {
 
   muteDiscord(mute) {
     const guild = this.discordCon.client.guilds.cache.get(process.env.DISCORD_SERVER_ID);
-    guild.members.fetch(process.env.USER_DISCORD_ID)
-    .then(member => {
-      if(member.voice.channelId != null) {
-      	member.voice.setMute(mute)
-        .catch((err) => {
-          console.log({ Error: err });
-        });
-      }
-    })
+    if (guild) {
+      guild.members.fetch(process.env.USER_DISCORD_ID)
+      .then(member => {
+        if(member.voice.channelId != null) {
+          member.voice.setMute(mute)
+          .catch((err) => {
+            console.log({ Error: err });
+          });
+        }
+      })
+      .catch(error => console.log("Discord error: %o", error));
+    } else {
+      console.log("No Discord guild found");
+    }
   };
 
   muteSource(source, mute) {

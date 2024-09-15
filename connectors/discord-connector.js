@@ -11,6 +11,9 @@ client.once('ready', () => {
 });
 
 // Login to Discord with your client's token
-client.login(token);
+client.login(token)
+.catch((err) => {
+  console.log({ Error: err });
+});
 
 module.exports.client = client;
