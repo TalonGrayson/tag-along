@@ -81,12 +81,13 @@ rfidScanListener = () => {
 
 const rfidEvents = {
   "4:28:82:26": "Mega Man",
-  "4:1f:c5:56": "Jack Sparrow",
+  // "4:1f:c5:56": "Jack Sparrow",
   "4:6b:2e:c9": "Talon Grayson",
-  "4:34:e4:5c": "Dr Doom",
-  "4:8b:43:44": "Guy Chapman",
-  "4:26:fa:50": "Chester Hassenpfeffer",
+  // "4:34:e4:5c": "Dr Doom",
+  // "4:8b:43:44": "Guy Chapman",
+  // "4:26:fa:50": "Chester Hassenpfeffer",
   "4:8e:93:91": "Poogie",
+  "4:33:7f:c0": "Iron Man",
 };
 
 findRfidEvent = (uid) => {
