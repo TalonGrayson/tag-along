@@ -13,7 +13,6 @@ module.exports = class Astroscan extends Device {
         super.setScene("Ending Soon").catch(console.error);
       } else {
         super.setScene("Starting Soon").catch(console.error);
-        super.muteSource("LeGohan Mic", true);
       }
 
     })
@@ -25,20 +24,17 @@ module.exports = class Astroscan extends Device {
 
   IronMan() {
     console.log("IronMan");
+    super.setScene("BRB").catch(console.error);
   }
 
   MegaMan() { // Gaming Mode
     console.log("MegaMan");
-    super.muteSource("LeGohan Mic", true);
+    super.setScene("Main").catch(console.error);
   }
 
-  Poogie() { // Mute/Unmute
-    super.sourceMuted("NEEWER Mic")
-    .then((data) => {
-      super.muteDiscord(!data.inputMuted);
-      super.muteSource("NEEWER Mic", !data.inputMuted);
-      console.log(data.inputMuted ? "No longer muted" : "-- YOU ARE MUTED --");
-    });
+  Poogie() { // Show/Hide Facecam
+    console.log("Poogie");
+    super.displaySource("FaceCam", "FaceCam C920", false);
   }
 
   // Currently unused:
