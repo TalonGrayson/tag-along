@@ -6,6 +6,43 @@ module.exports = class Astroscan extends Device {
     this.event = this.event_info.name.replace(/\s+/g, '');
   }
 
+  TalonGrayson() { // Stream Starting/Ending
+    console.log('TalonGrayson');
+    super.getStreamingStatus().then((streamingStatus) => {
+      if (streamingStatus.streaming) {
+        super.setScene("Ending Soon").catch(console.error);
+      } else {
+        super.setScene("Starting Soon").catch(console.error);
+        super.muteSource("LeGohan Mic", true);
+      }
+
+    })
+      .catch((err) => {
+        console.log({ Error: err });
+      }
+      )
+  }
+
+  IronMan() {
+    console.log("IronMan");
+  }
+
+  MegaMan() { // Gaming Mode
+    console.log("MegaMan");
+    super.muteSource("LeGohan Mic", true);
+  }
+
+  Poogie() { // Mute/Unmute
+    super.sourceMuted("NEEWER Mic")
+    .then((data) => {
+      super.muteDiscord(!data.inputMuted);
+      super.muteSource("NEEWER Mic", !data.inputMuted);
+      console.log(data.inputMuted ? "No longer muted" : "-- YOU ARE MUTED --");
+    });
+  }
+
+  // Currently unused:
+
   GuyChapman() { // Digital Mode
     console.log("GuyChapman");
     super.transitionToCamera("Main Cams", "HeartLogo", 850, "Elgato - Working");
@@ -49,15 +86,6 @@ module.exports = class Astroscan extends Device {
     super.timedSourceDisplay("Main", "Scoutfly", 90);
   }
 
-  Poogie() { // Mute/Unmute
-    super.sourceMuted("NEEWER Mic")
-    .then((data) => {
-      super.muteDiscord(!data.inputMuted);
-      super.muteSource("NEEWER Mic", !data.inputMuted);
-      console.log(data.inputMuted ? "No longer muted" : "-- YOU ARE MUTED --");
-    });
-  }
-
   HulkTerrain() {
     super.muteDiscord(true);
     super.muteSource("NEEWER Mic", true);
@@ -70,33 +98,10 @@ module.exports = class Astroscan extends Device {
     super.muteSource("Main Channel", false);
   }
 
-  MegaMan() { // Gaming Mode
-    console.log("MegaMan");
-    super.muteSource("LeGohan Mic", true);
-  }
-
   Shot() { // Shot
     console.log("Shot");
     super.timedSourceDisplay("Popups", "ShotDisclaimer", 5);
   }
 
-  TalonGrayson() { // Stream Starting/Ending
-    console.log('TalonGrayson');
-    super.getStreamingStatus().then((streamingStatus) => {
-      if (streamingStatus.streaming) {
-        super.setScene("Ending Soon").catch(console.error);
-      } else {
-        super.setScene("Starting Soon").catch(console.error);
-      }
 
-    })
-      .catch((err) => {
-        console.log({ Error: err });
-      }
-      )
-  }
-
-  IronMan() {
-    console.log("IronMan");
-  }
 }
