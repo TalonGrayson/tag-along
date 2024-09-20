@@ -10,9 +10,9 @@ module.exports = class Astroscan extends Device {
     console.log('TalonGrayson');
     super.getStreamingStatus().then((streamingStatus) => {
       if (streamingStatus.streaming) {
-        super.setScene("Ending Soon").catch(console.error);
+        super.setScene("Ending Soon");
       } else {
-        super.setScene("Starting Soon").catch(console.error);
+        super.setScene("Starting Soon");
       }
 
     })
@@ -24,12 +24,12 @@ module.exports = class Astroscan extends Device {
 
   IronMan() {
     console.log("IronMan");
-    super.setScene("BRB").catch(console.error);
+    super.setScene("BRB");
   }
 
   MegaMan() { // Gaming Mode
     console.log("MegaMan");
-    super.setScene("Main").catch(console.error);
+    super.setScene("Main");
   }
 
   Poogie() { // Show/Hide Facecam
