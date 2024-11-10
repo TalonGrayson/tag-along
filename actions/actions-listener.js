@@ -81,7 +81,7 @@ const getScannedRfidTagDataByScannableId = (scannable_id) => {
   const url = `${process.env.ASTRO_API_URL}/api/v1/scannable/${scannable_id}`;
   console.log({ASTRO_API_URL: process.env.ASTRO_API_URL, scannable_id});
 
-  fetch(url)
+  const scannable_info = fetch(url)
     .then(response => response.json())
     .then(data => {
       console.log({data});
@@ -90,6 +90,8 @@ const getScannedRfidTagDataByScannableId = (scannable_id) => {
     .catch(error => {
       console.error('Error:', error);
     });
+  
+  return scannable_info;
 }
 
 findRfidEvent = async (uid) => {
