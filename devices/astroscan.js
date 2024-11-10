@@ -39,7 +39,7 @@ module.exports = class Astroscan extends Device {
     console.log("Poogie");
     await super.sourceMuted("LeGohan Mic")
     .then(currentMuteState => {
-      console.log({currentMuteState});
+      console.log({currentMuteState, settingMutedStateTo: !currentMuteState.inputMuted});
       super.muteAll(!currentMuteState.inputMuted);
     });
   }

@@ -208,6 +208,9 @@ module.exports = class Device {
       .then(member => {
         if(member.voice.channelId != null) {
           member.voice.setMute(mute)
+          .then(() => {
+            console.log("Muted Discord: ", mute);
+          })
           .catch((err) => {
             console.log({ Error: err });
           });

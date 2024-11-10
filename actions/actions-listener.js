@@ -26,7 +26,6 @@ rfidEventListener = () => {
   if(!event_info.name) { console.log("No Name: %o", event_info); return; }
 
   // Run event
-  console.log("Event info: %o", event_info);
   runEvent(obsCon, discordCon, event_info);
 }
 
@@ -57,7 +56,6 @@ rfidScanListener = () => {
     const uid = mfrc522.getUid();
     findRfidEvent(uid)
     .then((eventData) => {
-      console.log({eventData});
       const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
       runEvent(obsCon, discordCon, event_info);
     })
@@ -86,6 +84,8 @@ const getScannedRfidTagDataByScannableId = (scannable_id) => {
     .catch(error => {
       console.error('Error:', error);
     });
+
+  console.log({scannable_info});
   
   return scannable_info;
 }
