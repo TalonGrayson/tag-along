@@ -68,44 +68,12 @@ rfidScanListener = async () => {
       rfidEvent = findRfidEvent(uid)
       .then((eventData) => {
         const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
-        console.log({event_info});
-        return event_info;
+        runEvent(obsCon, discordCon, event_info);
       })
       .catch(error => console.log({error}));
     }
   }, 500);
-
-  console.log({rfidEvent});
-
-  if(rfidEvent) {
-    console.log({rfidEvent});
-    runEvent(obsCon, discordCon, rfidEvent);
-    await waitForCardRemoval(mfrc522);
-  } else {
-    console.log("No event found");
-  }
-
 }
-
-const waitForCardRemoval = async (mfrc522) => {
-  while (true) {
-    console.log('Entering while loop');
-
-    mfrc522.reset();
-    let currentCard = mfrc522.findCard();
-  
-    if (!currentCard.status) {
-      console.log('Card removed');
-      pause(3000); // 3000ms delay
-      break;
-    }
-
-    console.log('Card still present');
-  
-    // Optional: Introduce a delay between iterations
-    pause(500); // 500ms delay
-  }
-};
 
 const pause = async (ms) => {
   console.log(`Pausing for ${ms}ms`);
