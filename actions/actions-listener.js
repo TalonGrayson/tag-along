@@ -64,7 +64,9 @@ rfidScanListener = async () => {
       return;
     }
 
-    if(!rfidEvent) {
+    if(rfidEvent) {
+      console.log("Please remove Card");
+    } else {
       rfidEvent = findRfidEvent(uid)
       .then((eventData) => {
         const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
