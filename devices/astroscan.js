@@ -40,7 +40,7 @@ module.exports = class Astroscan extends Device {
     await super.sourceMuted("LeGohan Mic")
     .then(currentMuteState => {
       console.log({currentMuteState});
-      super.muteAll(!currentMuteState);
+      super.muteAll(!currentMuteState.inputMuted);
     });
   }
 
