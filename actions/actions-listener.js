@@ -29,7 +29,7 @@ rfidEventListener = () => {
   runEvent(obsCon, discordCon, event_info);
 }
 
-rfidScanListener = () => {
+rfidScanListener = async () => {
   "use strict";
 
   //# This loop keeps checking for chips. If one is near it will get the UID and authenticate
@@ -44,7 +44,7 @@ rfidScanListener = () => {
 
   console.log("Ready...");
 
-  setInterval(async function() {
+  setInterval(function() {
     //# reset card
     mfrc522.reset();
 
@@ -62,10 +62,9 @@ rfidScanListener = () => {
       runEvent(obsCon, discordCon, event_info);
     })
     .catch(error => console.log({error}));
+  }, 500);
 
-    await waitForCardRemoval(mfrc522);
-
-  }, 500);  
+  await waitForCardRemoval(mfrc522);
 }
 
 const waitForCardRemoval = async (mfrc522) => {
