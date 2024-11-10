@@ -60,6 +60,7 @@ rfidScanListener = () => {
       runEvent(obsCon, discordCon, event_info);
       let currentCard = {status: true};
       while(currentCard.status) {
+        console.log({currentCard});
         currentCard = mfrc522.findCard();
       }
     })
