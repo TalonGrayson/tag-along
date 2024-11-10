@@ -77,7 +77,11 @@ const rfidEvents = {
 };
 
 const getScannedRfidTagDataByScannableId = (scannable_id) => {
-  fetch(`${process.env.ASTRO_API_URL}/api/v1/scannable/${scannable_id}`)
+  
+  const url = `${process.env.ASTRO_API_URL}/api/v1/scannable/${scannable_id}`;
+  console.log({ASTRO_API_URL: process.env.ASTRO_API_URL, scannable_id});
+
+  fetch(url)
     .then(response => response.json())
     .then(data => {
       console.log({data});
