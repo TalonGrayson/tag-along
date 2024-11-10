@@ -12,8 +12,9 @@ obs
     process.env.OBS_WEBSOCKET_ADDRESS,
     process.env.OBS_WEBSOCKET_PASSWORD
   )
-  .then(() => {
-    console.log(`OBSCon is connected to OBS... have a great stream!`);
+  .then((resolution) => {
+    console.log("Resolution: %o", resolution);
+    // console.log(`OBSCon is connected to OBS... have a great stream!`);
   })
   .catch((err) => {
     console.log(`OBSCon could not connect to OBS!`);
