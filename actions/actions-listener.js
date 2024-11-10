@@ -44,27 +44,31 @@ rfidScanListener = async () => {
 
   console.log("Ready...");
 
-  setInterval(function() {
-    //# reset card
-    mfrc522.reset();
+  //# reset card
+  mfrc522.reset();
 
-    //# Scan for cards
-    const foundCard = mfrc522.findCard();
-    if (!foundCard.status) return;
+  //# Scan for cards
+  const foundCard = mfrc522.findCard();
+  if (!foundCard.status) return;
 
-    //# Get the UID of the card
-    const uid = mfrc522.getUid();
-    if (!uid) return;
+  //# Get the UID of the card
+  const uid = mfrc522.getUid();
+  if (!uid) return;
 
-    findRfidEvent(uid)
-    .then((eventData) => {
-      const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
-      runEvent(obsCon, discordCon, event_info);
-    })
-    .catch(error => console.log({error}));
-  }, 500);
+  const rfidEvent = findRfidEvent(uid)
+  .then((eventData) => {
+    const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
+    return event_info;
+  })
+  .catch(error => console.log({error}));
 
-  await waitForCardRemoval(mfrc522);
+  if(rfidEvent) {
+    runEvent(obsCon, discordCon, rfidEvent);
+    await waitForCardRemoval(mfrc522);
+  }
+
+  pause(500); // 500ms delay
+
 }
 
 const waitForCardRemoval = async (mfrc522) => {
@@ -76,16 +80,20 @@ const waitForCardRemoval = async (mfrc522) => {
   
     if (!currentCard.status) {
       console.log('Card removed');
-      await new Promise(resolve => setTimeout(resolve, 3000)); // 3000ms delay
+      pause(3000); // 3000ms delay
       break;
     }
 
     console.log('Card still present');
   
     // Optional: Introduce a delay between iterations
-    await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
+    pause(500); // 500ms delay
   }
 };
+
+const pause = async (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 const rfidEvents = {
   "4:28:82:26": "Mega Man",
