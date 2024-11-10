@@ -54,6 +54,8 @@ rfidScanListener = () => {
 
     //# Get the UID of the card
     const uid = mfrc522.getUid();
+    if (!uid) return;
+
     findRfidEvent(uid)
     .then(async (eventData) => {
       const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
@@ -61,39 +63,31 @@ rfidScanListener = () => {
 
       let currentCard = foundCard;
 
-      while (currentCard.status) {
-        console.log('Entering while loop');
-        console.log({ currentCard });
-        console.log('Nullifying currentCard');
-        currentCard = null;
-      
-        try {
-          console.log('Re-detecting card');
-          mfrc522.reset();
-          currentCard = mfrc522.findCard();
-          console.log({ currentCard });
-        } catch (error) {
-          console.error('Error finding card:', error);
-          break; // Exit the loop on error
-        }
-      
-        // Exit condition to prevent infinite loop (example: after 10 iterations)
-        if (!currentCard.status) {
-          console.log({currentCardStatus: currentCard.status});
-          console.log('Card removed');
-          await new Promise(resolve => setTimeout(resolve, 3000)); // 3000ms delay
-          break;
-        }
-
-        console.log('Card still present');
-      
-        // Optional: Introduce a delay between iterations
-        await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
-      }
+      await waitForCardRemoval();
     })
     .catch(error => console.log({error}));
   }, 500);  
 }
+
+const waitForCardRemoval = async () => {
+  while (true) {
+    console.log('Entering while loop');
+
+    mfrc522.reset();
+    let currentCard = mfrc522.findCard();
+  
+    if (!currentCard.status) {
+      console.log('Card removed');
+      await new Promise(resolve => setTimeout(resolve, 3000)); // 3000ms delay
+      break;
+    }
+
+    console.log('Card still present');
+  
+    // Optional: Introduce a delay between iterations
+    await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
+  }
+};
 
 const rfidEvents = {
   "4:28:82:26": "Mega Man",
