@@ -67,21 +67,23 @@ rfidScanListener = () => {
       
         try {
           console.log('Re-detecting card');
-          const refoundCard = await mfrc522.findCard();
-          console.log({ refoundCard });
+          console.log({mfrc522});
+          mfrc522.reset();
+          currentCard = mfrc522.findCard();
+          console.log({ currentCard });
         } catch (error) {
           console.error('Error finding card:', error);
           break; // Exit the loop on error
         }
       
         // Exit condition to prevent infinite loop (example: after 10 iterations)
-        if (refoundCard.status) {
-          console.log('Card still present');
-        } else {
-          console.log({refoundCardCardStatus: refoundCard.status});
+        if (!currentCard.status) {
+          console.log({currentCardStatus: currentCard.status});
           console.log('Card removed');
           break;
         }
+
+        console.log('Card still present');
       
         // Optional: Introduce a delay between iterations
         await new Promise(resolve => setTimeout(resolve, 100)); // 100ms delay
