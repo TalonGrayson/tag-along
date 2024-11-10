@@ -31,6 +31,7 @@ rfidEventListener = () => {
 
 rfidScanListener = async () => {
   "use strict";
+  let rfidEvent;
 
   //# This loop keeps checking for chips. If one is near it will get the UID and authenticate
   const softSPI = new SoftSPI({
@@ -43,31 +44,34 @@ rfidScanListener = async () => {
   const mfrc522 = new Mfrc522(softSPI)//.setResetPin(22)
 
   console.log("Ready...");
+  setInterval(function() {
+    //# reset card
+    mfrc522.reset();
 
-  //# reset card
-  mfrc522.reset();
+    //# Scan for cards
+    const foundCard = mfrc522.findCard();
+    if (!foundCard.status) {
+      console.log("No Card Found");
+      return;
+    }
 
-  //# Scan for cards
-  const foundCard = mfrc522.findCard();
-  if (!foundCard.status) {
-    console.log("No Card Found");
-    return;
-  }
+    //# Get the UID of the card
+    const uid = mfrc522.getUid();
+    if (!uid) {
+      console.log("UID Scan Error");
+      return;
+    }
 
-  //# Get the UID of the card
-  const uid = mfrc522.getUid();
-  if (!uid) {
-    console.log("UID Scan Error");
-    return;
-  }
+    rfidEvent = findRfidEvent(uid)
+    .then((eventData) => {
+      const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
+      console.log({event_info});
+      return event_info;
+    })
+    .catch(error => console.log({error}));
 
-  const rfidEvent = await findRfidEvent(uid)
-  .then((eventData) => {
-    const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
-    console.log({event_info});
-    return event_info;
-  })
-  .catch(error => console.log({error}));
+    pause(500); // 500ms delay
+  }, 500);
 
   if(rfidEvent) {
     console.log({rfidEvent});
@@ -76,8 +80,6 @@ rfidScanListener = async () => {
   } else {
     console.log("No event found");
   }
-
-  pause(500); // 500ms delay
 
 }
 
