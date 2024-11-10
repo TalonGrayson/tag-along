@@ -69,6 +69,7 @@ rfidScanListener = () => {
           console.log('Re-detecting card');
           console.log({mfrc522});
           mfrc522.reset();
+          console.log({resetMrfc522: mfrc522});
           currentCard = mfrc522.findCard();
           console.log({ currentCard });
         } catch (error) {
@@ -86,7 +87,7 @@ rfidScanListener = () => {
         console.log('Card still present');
       
         // Optional: Introduce a delay between iterations
-        await new Promise(resolve => setTimeout(resolve, 100)); // 100ms delay
+        await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
       }
     })
     .catch(error => console.log({error}));
