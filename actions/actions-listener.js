@@ -17,16 +17,16 @@ runEvent = (obsCon, discordCon, event_info) => {
   device[device.event]();
 }
 
-particleEventListener = (event_data) => {
+// particleEventListener = (event_data) => {
 
-  // Parse event data
-  const event_info = JSON.parse(event_data.data.replace(/'/g, '"'));
-  if(!event_info || !event_info.device || !event_info.name) return;
+//   // Parse event data
+//   const event_info = JSON.parse(event_data.data.replace(/'/g, '"'));
+//   if(!event_info || !event_info.device || !event_info.name) return;
 
-  // Run event
-  runEvent(obsCon, discordCon, event_info);
+//   // Run event
+//   runEvent(obsCon, discordCon, event_info);
 
-};
+// };
 
 rfidEventListener = () => {
 
@@ -90,10 +90,23 @@ const rfidEvents = {
   "4:33:7f:c0": "Iron Man",
 };
 
-findRfidEvent = (uid) => {
+const getScannedRfidTagDataByScannableId = (scannable_id) => {
+  fetch(`${process.env.ASTRO_API_URL}/api/v1/scannable/${scannable_id}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      return data;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+findRfidEvent = async (uid) => {
   console.log(uid);
   if (uid.status) {
-    return rfidEvents[parsedRfidTag(uid.data)];
+    const scannedRfidData = await getScannedRfidTagDataByScannableId(uid.data);
+    return scannedRfidData.name;
   } else {
     console.log("UID Scan Error");
     return;
@@ -105,6 +118,5 @@ parsedRfidTag = (uid) => {
 }
 
 module.exports = {
-  particleEventListener,
   rfidScanListener,
 };

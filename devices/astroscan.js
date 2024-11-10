@@ -19,7 +19,7 @@ module.exports = class Astroscan extends Device {
       .catch((err) => {
         console.log({ Error: err });
       }
-      )
+    )
   }
 
   IronMan() {
