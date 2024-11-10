@@ -44,7 +44,7 @@ rfidScanListener = () => {
 
   console.log("Ready...");
 
-  setInterval(function() {
+  setInterval(async function() {
     //# reset card
     mfrc522.reset();
 
@@ -57,15 +57,14 @@ rfidScanListener = () => {
     if (!uid) return;
 
     findRfidEvent(uid)
-    .then(async (eventData) => {
+    .then((eventData) => {
       const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
       runEvent(obsCon, discordCon, event_info);
-
-      let currentCard = foundCard;
-
-      await waitForCardRemoval();
     })
     .catch(error => console.log({error}));
+
+    await waitForCardRemoval();
+    
   }, 500);  
 }
 
