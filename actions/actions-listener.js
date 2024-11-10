@@ -58,8 +58,9 @@ rfidScanListener = () => {
     .then(async (eventData) => {
       const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
       runEvent(obsCon, discordCon, event_info);
-      let currentCard = foundCard
-      
+
+      let currentCard = foundCard;
+
       while (currentCard.status) {
         console.log({ currentCard });
       
@@ -72,8 +73,12 @@ rfidScanListener = () => {
       
         // Exit condition to prevent infinite loop (example: after 10 iterations)
         if (!currentCard.status) {
+          console.log('Card removed');
           break;
         }
+
+        
+        console.log('Card still present');
       
         // Optional: Introduce a delay between iterations
         await new Promise(resolve => setTimeout(resolve, 100)); // 100ms delay
