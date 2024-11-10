@@ -14,7 +14,7 @@ runEvent = (obsCon, discordCon, event_info) => {
   if(!device) return;
       
   // Run the requested method on the device
-  device[device.event]();
+  device[device.action]();
 }
 
 rfidEventListener = () => {
@@ -56,9 +56,9 @@ rfidScanListener = () => {
     //# Get the UID of the card
     const uid = mfrc522.getUid();
     findRfidEvent(uid)
-    .then((eventName) => {
-      console.log({eventName});
-      const event_info = { device: "astroscan", name: eventName };
+    .then((eventData) => {
+      console.log({eventData});
+      const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
       runEvent(obsCon, discordCon, event_info);
     })
     .catch(error => console.log({error}));
@@ -77,15 +77,11 @@ const rfidEvents = {
 };
 
 const getScannedRfidTagDataByScannableId = (scannable_id) => {
-  
   const url = `${process.env.ASTRO_API_URL}/api/v1/scannable/${scannable_id}`;
-  console.log({ASTRO_API_URL: process.env.ASTRO_API_URL, scannable_id});
 
   const scannable_info = fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      console.log({data});
-      return data;
+    .then(response => {
+      return response.json()
     })
     .catch(error => {
       console.error('Error:', error);
@@ -98,10 +94,8 @@ findRfidEvent = async (uid) => {
   console.log({uid});
   if (uid.status) {
     const scannable_id = await parsedRfidTag(uid.data);
-    console.log({scannable_id});
     const scannedRfidData = await getScannedRfidTagDataByScannableId(scannable_id);
-    console.log({scannedRfidData});
-    return scannedRfidData.name;
+    return scannedRfidData;
   } else {
     console.log("UID Scan Error");
     return;

@@ -4,6 +4,7 @@ module.exports = class Astroscan extends Device {
   constructor(...args) {
     super(...args);
     this.event = this.event_info.name.replace(/\s+/g, '');
+    this.action = this.event_info.action;
   }
 
   TalonGrayson() { // Stream Starting/Ending
