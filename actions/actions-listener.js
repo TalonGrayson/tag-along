@@ -17,27 +17,13 @@ runEvent = (obsCon, discordCon, event_info) => {
   device[device.event]();
 }
 
-// particleEventListener = (event_data) => {
-
-//   // Parse event data
-//   const event_info = JSON.parse(event_data.data.replace(/'/g, '"'));
-//   if(!event_info || !event_info.device || !event_info.name) return;
-
-//   // Run event
-//   runEvent(obsCon, discordCon, event_info);
-
-// };
-
 rfidEventListener = () => {
 
   // Parse event data
   const event_info = rfidScanListener();
-  if(!event_info) console.log("No event!");
-  if(!event_info) return;
-  if(!event_info.device) console.log("No Device: %o", event_info);
-  if(!event_info.device) return;
-  if(!event_info.name) console.log("No Name: %o", event_info);
-  if(!event_info.name) return;
+  if(!event_info) { console.log("No event!"); return; }
+  if(!event_info.device) { console.log("No Device: %o", event_info); return; }
+  if(!event_info.name) { console.log("No Name: %o", event_info); return; }
 
   // Run event
   console.log("Event info: %o", event_info);
@@ -69,7 +55,6 @@ rfidScanListener = () => {
 
     //# Get the UID of the card
     const uid = mfrc522.getUid();
-    console.log("UID: %o", parsedRfidTag(uid.data));
     const eventName = findRfidEvent(uid);
     
     if (eventName) {
@@ -105,7 +90,8 @@ const getScannedRfidTagDataByScannableId = (scannable_id) => {
 findRfidEvent = async (uid) => {
   console.log(uid);
   if (uid.status) {
-    const scannedRfidData = await getScannedRfidTagDataByScannableId(uid.data);
+    const scannable_id = parsedRfidTag(uid.data);
+    const scannedRfidData = await getScannedRfidTagDataByScannableId(scannable_id);
     return scannedRfidData.name;
   } else {
     console.log("UID Scan Error");

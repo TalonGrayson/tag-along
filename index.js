@@ -9,11 +9,13 @@
 
     Can probably be run on a Raspberry Pi Zero W
 */
-const { listenForTags } = require("./connectors/rfid-connector");
 
-if (process.env.NODE_ENV != "production") {
+if (!process.env.NODE_ENV) {
   const dotenv = require("dotenv");
   dotenv.config();
 }
+
+const { listenForTags } = require("./connectors/rfid-connector");
+
 
 listenForTags();
