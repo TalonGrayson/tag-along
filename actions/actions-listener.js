@@ -69,9 +69,9 @@ rfidScanListener = async () => {
       return event_info;
     })
     .catch(error => console.log({error}));
-
-    pause(500); // 500ms delay
   }, 500);
+  
+  console.log({rfidEvent});
 
   if(rfidEvent) {
     console.log({rfidEvent});
