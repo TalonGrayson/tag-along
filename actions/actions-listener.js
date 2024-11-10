@@ -81,6 +81,7 @@ rfidScanListener = () => {
         if (!currentCard.status) {
           console.log({currentCardStatus: currentCard.status});
           console.log('Card removed');
+          await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
           break;
         }
 
