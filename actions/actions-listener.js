@@ -55,13 +55,28 @@ rfidScanListener = () => {
     //# Get the UID of the card
     const uid = mfrc522.getUid();
     findRfidEvent(uid)
-    .then((eventData) => {
+    .then(async (eventData) => {
       const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
       runEvent(obsCon, discordCon, event_info);
-      let currentCard = {status: true};
-      while(currentCard.status) {
-        console.log({currentCard});
-        currentCard = mfrc522.findCard();
+      let currentCard = foundCard
+      
+      while (currentCard.status) {
+        console.log({ currentCard });
+      
+        try {
+          currentCard = mfrc522.findCard();
+        } catch (error) {
+          console.error('Error finding card:', error);
+          break; // Exit the loop on error
+        }
+      
+        // Exit condition to prevent infinite loop (example: after 10 iterations)
+        if (!currentCard.status) {
+          break;
+        }
+      
+        // Optional: Introduce a delay between iterations
+        await new Promise(resolve => setTimeout(resolve, 100)); // 100ms delay
       }
     })
     .catch(error => console.log({error}));
