@@ -74,10 +74,10 @@ const rfidEvents = {
   "4:33:7f:c0": "Iron Man",
 };
 
-const getScannedRfidTagDataByScannableId = (scannable_id) => {
+const getScannedRfidTagDataByScannableId = async (scannable_id) => {
   const url = `${process.env.ASTRO_API_URL}/api/v1/scannable/${scannable_id}`;
 
-  const scannable_info = fetch(url)
+  const scannable_info = await fetch(url)
     .then(response => {
       return response.json()
     })
