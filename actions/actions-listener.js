@@ -64,12 +64,12 @@ rfidScanListener = () => {
       while (currentCard.status) {
         console.log('Entering while loop');
         console.log({ currentCard });
+        console.log('Nullifying currentCard');
+        currentCard = null;
       
         try {
           console.log('Re-detecting card');
-          console.log({mfrc522});
           mfrc522.reset();
-          console.log({resetMrfc522: mfrc522});
           currentCard = mfrc522.findCard();
           console.log({ currentCard });
         } catch (error) {
@@ -81,7 +81,7 @@ rfidScanListener = () => {
         if (!currentCard.status) {
           console.log({currentCardStatus: currentCard.status});
           console.log('Card removed');
-          await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
+          await new Promise(resolve => setTimeout(resolve, 3000)); // 3000ms delay
           break;
         }
 
