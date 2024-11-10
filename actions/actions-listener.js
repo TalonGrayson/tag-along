@@ -52,7 +52,6 @@ rfidScanListener = async () => {
     //# Scan for cards
     const foundCard = mfrc522.findCard();
     if (!foundCard.status) {
-      console.log("No Card Found");
       rfidEvent = null;
       return;
     }
@@ -64,9 +63,7 @@ rfidScanListener = async () => {
       return;
     }
 
-    if(rfidEvent) {
-      console.log("Please remove Card");
-    } else {
+    if(!rfidEvent) {
       rfidEvent = findRfidEvent(uid)
       .then((eventData) => {
         const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
