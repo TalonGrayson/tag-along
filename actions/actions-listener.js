@@ -63,12 +63,12 @@ rfidScanListener = () => {
     })
     .catch(error => console.log({error}));
 
-    await waitForCardRemoval();
-    
+    await waitForCardRemoval(mfrc522);
+
   }, 500);  
 }
 
-const waitForCardRemoval = async () => {
+const waitForCardRemoval = async (mfrc522) => {
   while (true) {
     console.log('Entering while loop');
 
