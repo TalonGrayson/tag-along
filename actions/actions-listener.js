@@ -63,8 +63,11 @@ rfidScanListener = async () => {
   .catch(error => console.log({error}));
 
   if(rfidEvent) {
+    console.log({rfidEvent})
     runEvent(obsCon, discordCon, rfidEvent);
     await waitForCardRemoval(mfrc522);
+  } else {
+    console.log("No event found");
   }
 
   pause(500); // 500ms delay
