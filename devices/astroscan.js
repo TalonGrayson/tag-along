@@ -38,6 +38,7 @@ module.exports = class Astroscan extends Device {
   Poogie() { // Show/Hide Facecam
     console.log("Poogie");
     const currentlyMuted = super.sourceMuted("LeGohan Mic");
+    console.log({currentlyMuted});
     super.muteAll(!currentlyMuted);
   }
 
