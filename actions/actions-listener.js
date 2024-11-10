@@ -62,10 +62,13 @@ rfidScanListener = () => {
       let currentCard = foundCard;
 
       while (currentCard.status) {
+        console.log('Entering while loop');
         console.log({ currentCard });
       
         try {
+          console.log('Re-detecting card');
           currentCard = mfrc522.findCard();
+          console.log({ currentCard });
         } catch (error) {
           console.error('Error finding card:', error);
           break; // Exit the loop on error
@@ -73,11 +76,11 @@ rfidScanListener = () => {
       
         // Exit condition to prevent infinite loop (example: after 10 iterations)
         if (!currentCard.status) {
+          console.log({currentCardStatus: currentCard.status});
           console.log('Card removed');
           break;
         }
 
-        
         console.log('Card still present');
       
         // Optional: Introduce a delay between iterations
