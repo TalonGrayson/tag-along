@@ -55,13 +55,13 @@ rfidScanListener = () => {
 
     //# Get the UID of the card
     const uid = mfrc522.getUid();
-    const eventName = findRfidEvent(uid);
-    console.log({eventName})
-    
-    if (eventName) {
+    const eventName = findRfidEvent(uid)
+    .then((eventName) => {
+      console.log({eventName});
       const event_info = { device: "astroscan", name: eventName };
       runEvent(obsCon, discordCon, event_info);
-    }
+    })
+    .catch(error => console.log({error}));
   }, 500);  
 }
 
