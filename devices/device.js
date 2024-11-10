@@ -239,6 +239,12 @@ module.exports = class Device {
     });
   }
 
+  muteAll(desiredMuteStatus) {
+    this.muteDiscord(desiredMuteStatus);
+    this.muteSource("LeGohan Mic", desiredMuteStatus);
+    this.muteSource("Roshi (Mic)", desiredMuteStatus);
+  }
+
   displaySource(sceneName, sourceName, visible) {
     this.obsCon.obs
     .call("GetSceneItemId", {

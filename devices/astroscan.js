@@ -26,16 +26,18 @@ module.exports = class Astroscan extends Device {
   IronMan() {
     console.log("IronMan");
     super.setScene("BRB");
+    super.muteAll(true);
   }
 
   MegaMan() { // Gaming Mode
     console.log("MegaMan");
     super.setScene("Main");
+    super.muteAll(false);
   }
 
   Poogie() { // Show/Hide Facecam
     console.log("Poogie");
-    super.displaySource("FaceCam", "FaceCam C920", false);
+    super.muteAll(true);
   }
 
   // Currently unused:
