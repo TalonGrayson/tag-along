@@ -12,11 +12,8 @@ client.once('ready', () => {
 
 // Login to Discord with your client's token
 client.login(token)
-.then((resolution) => {
-  console.log("Discord Resolution: %o", resolution);
-})
 .catch((err) => {
-  console.log({ Error: err });
+  console.log({ Error: err, token, env_var: process.env.DISCORD_TOKEN });
 });
 
 module.exports.client = client;

@@ -14,7 +14,7 @@ obs
   )
   .then((resolution) => {
     console.log("OBS Resolution: %o", resolution);
-    // console.log(`OBSCon is connected to OBS... have a great stream!`);
+    console.log(`OBSCon is connected to OBS... have a great stream!`);
   })
   .catch((err) => {
     console.log(`OBSCon could not connect to OBS!`);
