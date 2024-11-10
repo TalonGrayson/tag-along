@@ -55,7 +55,7 @@ rfidScanListener = () => {
 
     //# Get the UID of the card
     const uid = mfrc522.getUid();
-    const eventName = findRfidEvent(uid)
+    findRfidEvent(uid)
     .then((eventName) => {
       console.log({eventName});
       const event_info = { device: "astroscan", name: eventName };
@@ -91,7 +91,7 @@ const getScannedRfidTagDataByScannableId = (scannable_id) => {
 findRfidEvent = async (uid) => {
   console.log({uid});
   if (uid.status) {
-    const scannable_id = parsedRfidTag(uid.data);
+    const scannable_id = await parsedRfidTag(uid.data);
     console.log({scannable_id});
     const scannedRfidData = await getScannedRfidTagDataByScannableId(scannable_id);
     console.log({scannedRfidData});
