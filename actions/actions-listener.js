@@ -58,8 +58,8 @@ rfidScanListener = () => {
     .then((eventData) => {
       const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
       runEvent(obsCon, discordCon, event_info);
-      let currentCard = true;
-      while(currentCard) {
+      let currentCard = {status: true};
+      while(currentCard.status) {
         currentCard = mfrc522.findCard();
       }
     })
