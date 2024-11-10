@@ -49,21 +49,28 @@ rfidScanListener = async () => {
 
   //# Scan for cards
   const foundCard = mfrc522.findCard();
-  if (!foundCard.status) return;
+  if (!foundCard.status) {
+    console.log("No Card Found");
+    return;
+  }
 
   //# Get the UID of the card
   const uid = mfrc522.getUid();
-  if (!uid) return;
+  if (!uid) {
+    console.log("UID Scan Error");
+    return;
+  }
 
-  const rfidEvent = findRfidEvent(uid)
+  const rfidEvent = await findRfidEvent(uid)
   .then((eventData) => {
     const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
+    console.log({event_info});
     return event_info;
   })
   .catch(error => console.log({error}));
 
   if(rfidEvent) {
-    console.log({rfidEvent})
+    console.log({rfidEvent});
     runEvent(obsCon, discordCon, rfidEvent);
     await waitForCardRemoval(mfrc522);
   } else {
@@ -95,6 +102,7 @@ const waitForCardRemoval = async (mfrc522) => {
 };
 
 const pause = async (ms) => {
+  console.log(`Pausing for ${ms}ms`);
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
