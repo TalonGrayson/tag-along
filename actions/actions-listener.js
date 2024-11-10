@@ -44,6 +44,7 @@ rfidScanListener = async () => {
   const mfrc522 = new Mfrc522(softSPI)//.setResetPin(22)
 
   console.log("Ready...");
+  
   setInterval(function() {
     //# reset card
     mfrc522.reset();
@@ -52,6 +53,7 @@ rfidScanListener = async () => {
     const foundCard = mfrc522.findCard();
     if (!foundCard.status) {
       console.log("No Card Found");
+      rfidEvent = null;
       return;
     }
 
@@ -62,15 +64,17 @@ rfidScanListener = async () => {
       return;
     }
 
-    rfidEvent = findRfidEvent(uid)
-    .then((eventData) => {
-      const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
-      console.log({event_info});
-      return event_info;
-    })
-    .catch(error => console.log({error}));
+    if(!rfidEvent) {
+      rfidEvent = findRfidEvent(uid)
+      .then((eventData) => {
+        const event_info = { device: "astroscan", name: eventData.name, action: eventData.action };
+        console.log({event_info});
+        return event_info;
+      })
+      .catch(error => console.log({error}));
+    }
   }, 500);
-  
+
   console.log({rfidEvent});
 
   if(rfidEvent) {
